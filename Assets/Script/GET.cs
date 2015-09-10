@@ -8,8 +8,6 @@ public class GET : Json_analays{
 
 	public  Dictionary <string,object> Take_Json(string url)
 	{
-
-		//url = "http://192.168.33.11:3000/plays/対戦ID/pieces";
 		WWW www = new WWW(url);
 		StartCoroutine (wait(www));
 		if (www.error == null) {

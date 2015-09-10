@@ -5,6 +5,9 @@ using MiniJSON;
 
 public class UserManager : Json_analays {
 	public Dictionary<string,object> User_data{get; private set;}
+	private string room;
+	private string username;
+	private string url;
 	/*
 	public string user_id{ get; private set;}
 	public string play_id{ get; private set;}
@@ -23,7 +26,10 @@ public class UserManager : Json_analays {
 
 	}
 	public void User_Login(string room,string username,string url){
-		url = "http://192.168.33.11:3000/users/login";
+		this.room = room;
+		this.username = username;
+		this.url = url +"/users/login";
+		//url = "http://192.168.33.11:3000/users/login";
 		Debug.Log (url);
 		Debug.Log (username);
 		Debug.Log (room);

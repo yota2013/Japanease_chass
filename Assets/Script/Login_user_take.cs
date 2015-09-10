@@ -10,6 +10,7 @@ public class Login_user_take : MonoBehaviour {
 	string room;
 	string username;
 	string url;
+
 	void Start () {
 		User_Login_data = GameObject.Find("UserManager").GetComponent<UserManager>();
 
