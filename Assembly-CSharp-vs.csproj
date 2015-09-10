@@ -46,9 +46,13 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Script\LoginManager.cs" />
+     <Compile Include="Assets\Script\Board_system.cs" />
+     <Compile Include="Assets\Script\GET.cs" />
+     <Compile Include="Assets\Script\Json_analays.cs" />
      <Compile Include="Assets\Script\Login_user_take.cs" />
-     <Compile Include="Assets\Script\MiniJSON.cs" />
+     <Compile Include="Assets\Script\MatchingSystem.cs" />
+     <Compile Include="Assets\Script\Shougi_data.cs" />
+     <Compile Include="Assets\Script\UserManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
@@ -61,6 +65,10 @@
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{39EF6A8E-2C40-6A65-7798-DEC9F32E9AC0}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

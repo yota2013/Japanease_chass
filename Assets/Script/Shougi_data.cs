@@ -1,27 +1,18 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class Shougi_data : Json_analays {
+using UnityEngine.UI;
+public class Shougi_data : GET  {
 	private UserManager User_Login_data;
 	public Dictionary<string,object> Piece{ get; private set;}//<ID(key),nakami> Peiece data
-	private List<string> koma;
-	public GameObject prefab;
-	private int[,] board;
+	//private List<string> koma;
+	//public GameObject prefab;
 	// Use this for initialization
 	void Start () {
-	//	User_Login_data = GameObject.Find("UserManager").GetComponent<UserManager>();
-		//Koma = new List<string> ();
-		SetKoma ();
-		board = new int[9,9];
-		for (int i = 0; i < board.GetLength(0); i++)
-		{
+		//User_Login_data = GameObject.Find("UserManager").GetComponent<UserManager>();
+	//	koma = new List<string> ();
+		SetKoma (0,0,"Koma/sgl02",1);
 
-			for (int j = 0; j < board.GetLength(1); j++)
-			{
-				board[i,j] = 0;
-				Debug.Log(board[i,j]);
-			}            
-		}
 	}
 	
 	// Update is called once per frame
@@ -29,26 +20,31 @@ public class Shougi_data : Json_analays {
 	{
 
 	}
-	void SetKoma()
+
+	void SetKoma(int x,int y,string koma_path,int koma_nun)
 	{
-		//Koma.Add ("Assets/Resource/60x64/sgl01");
-		//Debug.Log (Koma[1]);
-		//GameObject prefab = Resources.Load ("/60x64/sgl01.png") as GameObject;
-		Instantiate(prefab, new Vector3(1f,1f,1f),Quaternion.identity);
-	}
-	void PieceGet()
-	{
-		StartCoroutine(Piece_take());
+		GameObject spremty_prefab = Resources.Load ("Prefab/koma") as GameObject;
+		Sprite koma_spr =Resources.Load<Sprite>(koma_path);
+		Debug.Log (koma_spr);
+		GameObject koma = Instantiate(spremty_prefab,new Vector3(x,y,0),Quaternion.identity) as GameObject;
+		koma.GetComponent<Image>().sprite = koma_spr;
+		RectTransform main_Board = GameObject.Find ("Board").GetComponent<RectTransform> ();
+		koma.transform.SetParent (main_Board.transform);
+		koma.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+
 
 	}
-	private IEnumerator Piece_take()
+
+	void PieceGet()
 	{
-		string url = "http://192.168.33.11:3000/plays/対戦ID/pieces";
-		WWW www = new WWW(url);
-		yield return www;
-		if (www.error == null) {
-			Debug.Log (www.text);
-			Piece = Json_Dictionary(www.text); 
+		Piece_take ();
+
+	}
+	private void Piece_take()
+	{
+		if ((Piece = Take_Json ("http://192.168.33.11:3000/plays/対戦ID/pieces")) != null) {
+
+			Debug.Log ("OK");
 		} else {
 			Debug.Log ("data nothing");
 		}

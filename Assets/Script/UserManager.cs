@@ -20,8 +20,8 @@ public class UserManager : Json_analays {
 
 	// Update is called once per frame
 	void Update () {
-	}
 
+	}
 	public void User_Login(string room,string username,string url){
 		url = "http://192.168.33.11:3000/users/login";
 		Debug.Log (url);
@@ -39,13 +39,12 @@ public class UserManager : Json_analays {
 		WWW www = new WWW(url, Form);
 		yield return www;
 		if (www.error == null) {
-			Debug.Log (www.text);
+			Debug.Log ("UserManager"+www.text);
 			User_data = Json_Dictionary (www.text);
 			Application.LoadLevel("gamemode");
 		} else {
 			Debug.Log(" deta nothing");
 			//debug yatu
-			Application.LoadLevel("gamemode");
 		}
 	}
 
