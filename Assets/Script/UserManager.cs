@@ -3,17 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using MiniJSON;
 
-public class UserManager : Json_analays {
+public class UserManager : MonoBehaviour{
 	public Dictionary<string,object> User_data{get; private set;}
-	private string room;
-	private string username;
-	private string url;
-	/*
-	public string user_id{ get; private set;}
-	public string play_id{ get; private set;}
-	public string state{ get; private set;}
-	public string role{ get; private set;} 
-	*/
+	public string room{ get; private set;}
+	public string username{ get; private set;}
+	public string url{ get; private set;}
 	// Use this for initialization
 	void Awake(){
 		DontDestroyOnLoad (this.gameObject);// DontDestroy gameobject
@@ -28,13 +22,11 @@ public class UserManager : Json_analays {
 	public void User_Login(string room,string username,string url){
 		this.room = room;
 		this.username = username;
-		this.url = url +"/users/login";
-		//url = "http://192.168.33.11:3000/users/login";
-		Debug.Log (url);
-		Debug.Log (username);
-		Debug.Log (room);
-		//Login_User_Take ();
-		StartCoroutine(Login_User_Take(room,username,url));
+		this.url = url;
+		Debug.Log (this.url);
+		Debug.Log (this.username);
+		Debug.Log (this.room);
+		StartCoroutine(Login_User_Take(this.room,this.username,this.url+"/users/login"));
 	}
 
 	private IEnumerator Login_User_Take(string room,string username,string url)
