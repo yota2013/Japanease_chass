@@ -21,8 +21,5 @@ public class Board_system : MonoBehaviour {
 	void Update () {
 	
 	}
-	void Bard()
-	{
 
-	}
 }

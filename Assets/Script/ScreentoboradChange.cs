@@ -11,10 +11,11 @@ public class ScreentoboradChange : MonoBehaviour {
 		Board = GameObject.Find("Board");
 	}
 
-	public Vector2 Screentoborad(float x,float y)
+	public Vector2 Screentoboard(float x,float y)
 	{
-	  float Board_x = Board.GetComponent<RectTransform> ().sizeDelta.x;
-	  float Board_y = Board.GetComponent<RectTransform> ().sizeDelta.y;
-		return new Vector2((Board_x/10f) * x , (Board_y/10f) * y);
+		float Board_widith = Board.GetComponent<RectTransform> ().sizeDelta.x;
+		float Board_high = Board.GetComponent<RectTransform> ().sizeDelta.y;
+		Debug.Log (Board_widith);
+		return new Vector2(-(Board_widith/10f) * (x - 1) + x, - (Board_high/10f) * (y - 1) + y);
 	}
 }

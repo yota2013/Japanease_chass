@@ -4,60 +4,47 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class MatchingSystem : MonoBehaviour {
-	private  Dictionary<string,object>data;
-	public Text plyer_state;
-	private Shougi_data shougi_data;
-	string is_room = "waiting";
+
+	private  UserManager userdata;
+	public Text plyerstate;
+	private Shougi_data shougidata;
+	Situation _situation = new Situation ();
+	string roomstate;
+	 // Json_analays json= new Json_analays();
 	// Use this for initialization
 	void Awake () {
-		data = GameObject.Find("UserManager").GetComponent<UserManager>().User_data;
 
-		shougi_data= GameObject.Find("Match_Manager").GetComponent<Shougi_data>();
+		userdata = GameObject.Find("UserManager").GetComponent<UserManager>();
+		shougidata= GameObject.Find("Match_Manager").GetComponent<Shougi_data>();
+		//StartCoroutine (Login_User_Take(user_data.room,user_data.username,user_data.url)); 
+		//AddComponent<test>();
+		GameObject Match_Manager = new GameObject("Matchsystem");
+		Communication comm = Match_Manager.AddComponent<Communication>();
+		comm.setUrl( new URL ().room_state (userdata));
+		comm.OnDone((Dictionary<string,object> data) => {
+			roomstate = (string)data["state"];
+		});
+		comm.Request ();
+
 	}
 	void Start () {
-		if(Game_stiation() == true)
-		{
-			plyer_state.text = "YOU:Waiting";
-		}
-		else{
-			plyer_state.text = "YOU:Playing";
-		}
+
+
+
 	}
 	// Update is called once per frame
 	void Update () {
-		if(Room_sitation()== true)
+
+		if(_situation.Room_sitation(userdata.User_data)== true)
 		{
 			Debug.Log("Battle START");
-			plyer_state.text = "YOU:START";
-			shougi_data.Piece_Get();
+			plyerstate.text = "YOU:START";
+			shougidata.Piece_Get();
 		}
 	}
 	// return wating or 
-	public bool Game_stiation(){
-		if ((string)data ["state"] == "waiting") {
-			Debug.Log ("MatchingSystem" + data ["state"]+"Matching OK"+"Game Start");
-			return true;
-		}
-		Debug.Log("MatchingSystem" + "ERROR");
-		return false; 
-	}
-	// return Dctionary
-	public bool battle_sitation(){
-		if ((string)data ["role"] == "player") {
-			Debug.Log ("MatchingSystem" + data ["role"]+"Player");
-			return true;
-		}
-		Debug.Log("MatchingSystem" + "watcher");
-		return false; 
-	}
-	public bool Room_sitation()
-	{
-		if(is_room == "waiting")
-		{
-			return false;
-		}
-		else  return true;
-	}
+
+
 //mada
 	private IEnumerator Login_User_Take(string room,string username,string url)
 	{
@@ -67,12 +54,13 @@ public class MatchingSystem : MonoBehaviour {
 		WWW www = new WWW (url, Form);
 		yield return www;
 		if (www.error == null) {
-			Dictionary<string,object> room_data = Json_Dictionary (www.text);
-			is_room = (string)room_data ["state"];
+			Json_analays json = new Json_analays();
+		//	Dictionary<string,object> room_data =  json.Json_Dictionary (www.text);
+		//	is_room = (string)room_data ["state"];
 			Application.LoadLevel ("gamemode");
-		} else {
-			Debug.Log (" deta nothing");
-			//debug yatu
-		}
+		} 
+		Debug.Log (" deta nothing");
+		//debug yatu
+
 	}
 }

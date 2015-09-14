@@ -23,10 +23,12 @@ public class UserManager : MonoBehaviour{
 		this.room = room;
 		this.username = username;
 		this.url = url;
+		this.url = "192.168.33.11:3000";
 		Debug.Log (this.url);
 		Debug.Log (this.username);
 		Debug.Log (this.room);
-		StartCoroutine(Login_User_Take(this.room,this.username,this.url+"/users/login"));
+		Debug.Log (new URL().login(this.url));
+		StartCoroutine(Login_User_Take(this.room,this.username,new URL().login(this.url)));
 	}
 
 	private IEnumerator Login_User_Take(string room,string username,string url)
@@ -38,10 +40,10 @@ public class UserManager : MonoBehaviour{
 		yield return www;
 		if (www.error == null) {
 			Debug.Log ("UserManager"+www.text);
-			User_data = Json_Dictionary (www.text);
+			User_data = new Json_analays().Json_Dictionary (www.text);
 			Application.LoadLevel("gamemode");
 		} else {
-			Debug.Log(" deta nothing");
+			Debug.Log(" data nothing");
 			//debug yatu
 		}
 	}
