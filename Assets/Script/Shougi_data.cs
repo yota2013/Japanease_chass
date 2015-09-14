@@ -3,27 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 public class Shougi_data : MonoBehaviour {
-	private UserManager User_Login_data;
+	private UserManager UserLogindata;
 	public Dictionary<string,object> Pieceall{ get; private set;}//<ID(key),nakami> Peiece data
 	private GameObject Board;
 
 	// Use this for initialization
 	void Start () {
-		User_Login_data = GameObject.Find ("UserManager").GetComponent<UserManager> ();
+		UserLogindata = GameObject.Find ("UserManager").GetComponent<UserManager> ();
 		Board = GameObject.Find ("Board");
 	}
 	
 	public void Piece_Get()
 	{
 		Piece_take ();
+
 	}
 	private void Piece_take()
 	{
 			//GET (User_Login_data.url + "/plays/"+User_Login_data.User_data ["play_id"]+"/pieces");
-		StartCoroutine (GET (User_Login_data.url + "/plays/"+User_Login_data.User_data ["play_id"]+"/pieces"));
+		URL url= UserLogindata.GetUserUrl ();
+		StartCoroutine (POST (url.piece() ));
 	}
 
-	private IEnumerator GET(string url)
+	private IEnumerator POST(string url)
 	{
 		WWW www = new WWW(url);
 		yield return www;

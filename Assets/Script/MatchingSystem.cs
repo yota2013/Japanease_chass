@@ -18,29 +18,40 @@ public class MatchingSystem : MonoBehaviour {
 		shougidata= GameObject.Find("Match_Manager").GetComponent<Shougi_data>();
 		//StartCoroutine (Login_User_Take(user_data.room,user_data.username,user_data.url)); 
 		//AddComponent<test>();
-		GameObject Match_Manager = new GameObject("Matchsystem");
-		Communication comm = Match_Manager.AddComponent<Communication>();
-		comm.setUrl( new URL ().room_state (userdata));
-		comm.OnDone((Dictionary<string,object> data) => {
-			roomstate = (string)data["state"];
-		});
-		comm.Request ();
+
 
 	}
-	void Start () {
 
+	
+	IEnumerator Start ()
+	{
+		/*
+		GameObject Match_Manager = new GameObject("Matchsystem");
+		Communication comm = Match_Manager.AddComponent<Communication>();
+		while (true) {
 
-
+			URL url_data = userdata.GetUserUrl ();
+			comm.setUrl(url_data.room_state());
+			comm.OnDone((Dictionary<string,object> data) => {
+				roomstate = data;
+			});
+			comm.Request ();
+			if(roomstate = "playing") break;
+			yield return   new WaitForSeconds(2.0f);
+		}
+		*/
 	}
 	// Update is called once per frame
 	void Update () {
 
-		if(_situation.Room_sitation(userdata.User_data)== true)
+		if(_situation.roomSituation(userdata.User_data)== true)
 		{
 			Debug.Log("Battle START");
 			plyerstate.text = "YOU:START";
 			shougidata.Piece_Get();
 		}
+		//kokoderu-pu time
+
 	}
 	// return wating or 
 
@@ -63,4 +74,5 @@ public class MatchingSystem : MonoBehaviour {
 		//debug yatu
 
 	}
+
 }

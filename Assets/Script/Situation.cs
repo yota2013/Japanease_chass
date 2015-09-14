@@ -15,7 +15,7 @@ public class Situation{
 	}
 
 
-	public bool battle_sitation(Dictionary<string,object> data){
+	public bool battleSituation(Dictionary<string,object> data){
 		if ((string)data ["role"] == "player") {
 			Debug.Log ("MatchingSystem" + data ["role"]+"Player");
 			return true;
@@ -24,7 +24,7 @@ public class Situation{
 		return false; 
 	}
 
-	public bool Room_sitation(Dictionary<string,object> room_data)
+	public bool roomSituation(Dictionary<string,object> room_data)
 	{
 		if((string)room_data ["state"] == "waiting")
 		{
