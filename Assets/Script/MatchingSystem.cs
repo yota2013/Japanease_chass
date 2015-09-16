@@ -10,6 +10,9 @@ public class MatchingSystem : MonoBehaviour {
 	private Shougi_data shougidata;
 	Situation _situation = new Situation ();
 	string roomstate;
+	public const float INTERVAL = 5.0f;
+	public float timer = INTERVAL;
+
 	 // Json_analays json= new Json_analays();
 	// Use this for initialization
 	void Awake () {
@@ -20,10 +23,11 @@ public class MatchingSystem : MonoBehaviour {
 		//AddComponent<test>();
 
 
+
 	}
 
 	
-	IEnumerator Start ()
+	void Start ()
 	{
 		/*
 		GameObject Match_Manager = new GameObject("Matchsystem");
@@ -40,9 +44,17 @@ public class MatchingSystem : MonoBehaviour {
 			yield return   new WaitForSeconds(2.0f);
 		}
 		*/
+
 	}
 	// Update is called once per frame
 	void Update () {
+
+		timer -= Time.deltaTime;
+		if (timer <= 0)
+		{
+			// 任意の処理
+			timer = INTERVAL;
+		}
 
 		if(_situation.roomSituation(userdata.User_data)== true)
 		{

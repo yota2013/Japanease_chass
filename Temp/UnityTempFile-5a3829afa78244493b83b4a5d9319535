@@ -78,12 +78,15 @@
 -define:UNITY_EDITOR_64
 -define:UNITY_EDITOR_OSX
 'Assets/Script/Board_system.cs'
-'Assets/Script/GET.cs'
+'Assets/Script/Communication.cs'
+'Assets/Script/CreateKoma.cs'
 'Assets/Script/Json_analays.cs'
 'Assets/Script/Login_user_take.cs'
 'Assets/Script/MatchingSystem.cs'
-'Assets/Script/Screentoborad.cs'
+'Assets/Script/ScreentoboradChange.cs'
 'Assets/Script/Shougi_data.cs'
+'Assets/Script/Situation.cs'
+'Assets/Script/URL.cs'
 'Assets/Script/UserManager.cs'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/System.Runtime.Serialization.dll'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/System.Xml.Linq.dll'

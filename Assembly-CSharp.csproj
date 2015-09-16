@@ -46,12 +46,15 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\Board_system.cs" />
-     <Compile Include="Assets\Script\GET.cs" />
+     <Compile Include="Assets\Script\Communication.cs" />
+     <Compile Include="Assets\Script\CreateKoma.cs" />
      <Compile Include="Assets\Script\Json_analays.cs" />
      <Compile Include="Assets\Script\Login_user_take.cs" />
      <Compile Include="Assets\Script\MatchingSystem.cs" />
      <Compile Include="Assets\Script\ScreentoboradChange.cs" />
      <Compile Include="Assets\Script\Shougi_data.cs" />
+     <Compile Include="Assets\Script\Situation.cs" />
+     <Compile Include="Assets\Script\URL.cs" />
      <Compile Include="Assets\Script\UserManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
