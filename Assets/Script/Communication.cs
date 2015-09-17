@@ -7,7 +7,7 @@ using System.Collections.Generic;
 // comm.OnDone = (dictionary) => { this.room_no = data['room_no']; }
 // comm.Request();
 
-public class Communication : MonoBehaviour{
+public class Communication :  SingletonMonoBehaviour<Communication> {
 	MyGet method;
 	string url;
 
@@ -23,11 +23,15 @@ public class Communication : MonoBehaviour{
 		this.method = method;
 	}
 
-	public void Request() {
-		StartCoroutine (wait ());
+	public void RequestGet() {
+		StartCoroutine (waitGET ());
+	}
+	
+	public void RequestPost() {
+		StartCoroutine (waitPost ());
 	}
 
-	private IEnumerator wait()
+	private IEnumerator waitGET()
 	{	
 		WWW www = new WWW(url);
 		yield return www;
@@ -39,7 +43,27 @@ public class Communication : MonoBehaviour{
 			Debug.Log ("Jsonanalays data nothing");
 		}
 	}
-
+	//mada
+	private IEnumerator waitPost()
+	{	
+		WWW www = new WWW(url);
+		yield return www;
+		if (www.error == null) {
+			Debug.Log (www.text);
+			Dictionary <string,object> data = new Json_analays ().Json_Dictionary (www.text);
+			method(data);
+		} else {	
+			Debug.Log ("Jsonanalays data nothing");
+		}
+	}
+	public void Awake()
+	{
+		if(this != Instance){
+			Destroy(this);
+			return;
+		}
+		DontDestroyOnLoad(this.gameObject);
+	}
 	// Update is called once per frame
 
 }

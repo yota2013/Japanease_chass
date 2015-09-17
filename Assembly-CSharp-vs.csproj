@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{49F5ABBB-89AC-C37B-0FB5-66FADB720452}</ProjectGuid>
+	<ProjectGuid>{D6F97D26-BBDD-8D7B-E622-4BF31611BA21}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -47,11 +47,17 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\Board_system.cs" />
-     <Compile Include="Assets\Script\GET.cs" />
+     <Compile Include="Assets\Script\Communication.cs" />
+     <Compile Include="Assets\Script\CreateKoma.cs" />
      <Compile Include="Assets\Script\Json_analays.cs" />
+     <Compile Include="Assets\Script\Koma.cs" />
      <Compile Include="Assets\Script\Login_user_take.cs" />
      <Compile Include="Assets\Script\MatchingSystem.cs" />
+     <Compile Include="Assets\Script\ScreentoboradChange.cs" />
      <Compile Include="Assets\Script\Shougi_data.cs" />
+     <Compile Include="Assets\Script\SingletonMonoBehavior.cs" />
+     <Compile Include="Assets\Script\Situation.cs" />
+     <Compile Include="Assets\Script\URL.cs" />
      <Compile Include="Assets\Script\UserManager.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
@@ -68,7 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{39EF6A8E-2C40-6A65-7798-DEC9F32E9AC0}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{46E8F05F-CB6B-84BC-3241-D953B14C78CD}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

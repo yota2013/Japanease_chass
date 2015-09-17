@@ -9,4 +9,5 @@ public class Json_analays  {
 		//ex)string result = (string) json["result"];
 		}
 
+
 }

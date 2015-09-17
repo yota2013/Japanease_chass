@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class URL  {
 	//http://192.168.33.11:3000
 	//public string url {get;private set};
-	UserManager User_Login_data;
-	public string url;
+	public string plyerId { get; private set;}
+	public string url { get; private set;}
 
-	public void SetManager(UserManager User_Login_data)
+	public void SetPlayerID(string plyerId)
 	{
 	
-		this.User_Login_data = User_Login_data;
+		this.plyerId = plyerId;
 	}
 
 	public void SetUrl(string url)
@@ -21,8 +21,9 @@ public class URL  {
 	}
 
 	public string piece( )
-	{	
-		return	(User_Login_data.url + "/plays/" + User_Login_data.User_data["play_id"] + "/pieces");
+	{		
+		Debug.Log (url + "/plays/" + plyerId+ "/pieces");
+		return	(url + "/plays/" + plyerId + "/pieces");
 	}
 	public string login()
 	{	
@@ -30,32 +31,33 @@ public class URL  {
 	}
 	public string room_state()
 	{	
-		return	(User_Login_data.url + "/plays/" + User_Login_data.User_data ["play_id"] + "/state");
+		return	(url + "/plays/" + plyerId + "/state");
 		// /plays/対戦ID/state
 	}
-	public string Users()
+	public string users()
 	{	
-		return	(User_Login_data.url + "/plays/" + User_Login_data.User_data ["play_id"] + "/users");
+		return	(url + "/plays/" + plyerId + "/users");
 		// /plays/対戦ID/users
 	}
 	public string winner( )
 	{	
-		return	(User_Login_data.url + "/plays/" + User_Login_data.User_data ["play_id"] + "/users");
+		return	(url + "/plays/" + plyerId + "/users");
 		// /plays/対戦ID/winner
 	}
 	public string Battle_sitation( )
 	{	
-		return	(User_Login_data.url + "/plays/" + User_Login_data.User_data ["play_id"]);
+		Debug.Log (plyerId + "/plays/" + plyerId);
+		return	(url + "/plays/" + plyerId);
 		// /plays/対戦ID
 	}
 	public string plays_update( )
 	{	
-		return	(User_Login_data.url + "/plays/update");
+		return	(url+plyerId + "/plays/update");
 		// /plays/update
 	}
 	public string plays_logout( )
 	{	
-		return	(User_Login_data.url + "/plays/logout");
+		return	(url+plyerId + "/plays/logout");
 		///users/logout
 	}
 
