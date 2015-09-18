@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MiniJSON;
 
-public class UserManager : MonoBehaviour{
+public class UserManager : SingletonMonoBehaviour<UserManager>{
 	public Dictionary<string,object> UserData{get; private set;}
 	public Dictionary<string,object> plyerID;
 	public URL userurl;

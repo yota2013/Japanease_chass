@@ -42,26 +42,7 @@ public class Shougi_data : MonoBehaviour {
 		});
 		Communication.Instance.RequestGet ();
 	}
-/*
-	private IEnumerator Get(string url)
-	{
-		WWW www = new WWW(url);
-		yield return www;
-		if (www.error == null) {
-			Debug.Log ("Pieces"+www.text);
-			Pieceall = new Json_analays().Json_Dictionary(www.text);
-			Debug.Log (Pieceall);
-			foreach (KeyValuePair <string, object>kvp in Pieceall)
-			{
-				Dictionary<string,object> koma = kvp.Value as Dictionary<string,object>;
-				KomaCreate(koma,kvp.Key);
-			}
-		} else {	
-			Debug.Log ("Jsonanalays data nothing");
-		}
 
-	}
-*/
 	public void KomaCreate(Dictionary<string,object> koma,string num)
 	{
 		if (isPlyer (Userdata.GetplyerID ())) 
@@ -70,14 +51,14 @@ public class Shougi_data : MonoBehaviour {
 
 		}
 		GameObject spremtyPrefab = Resources.Load ("Prefab/koma") as GameObject;
-		RectTransform main_Board = GameObject.Find ("Board").GetComponent<RectTransform> ();
+		GameObject canvas = GameObject.Find ("Canvas") as GameObject;
 
 		GameObject komaPrefab = Instantiate(spremtyPrefab,new Vector2(0f,0f),
 		                                    Quaternion.Euler(new Vector3( 0,0,EnemyOrAlly (koma,Userdata.GetplyerID ())))) as GameObject;
 		komaPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Koma/"+(string)koma["name"]);
-		komaPrefab.transform.SetParent (main_Board.transform);
+		komaPrefab.transform.SetParent (canvas.transform);
 		komaPrefab.GetComponent<RectTransform>().anchoredPosition = new ScreentoboradChange().Screentoboard((long)koma["posx"],(long)koma["posy"],Board);
-		komaPrefab.GetComponent<Koma> ().SetKoma ((long)koma["posx"],(long)koma["posy"],koma["name"].ToString(),num,(bool)koma["promote"]);
+		komaPrefab.GetComponent<Koma> ().SetKoma ((long)koma["posx"],(long)koma["posy"],koma["owner"].ToString(),num,(bool)koma["promote"]);
 	}
 	//kokodeenemy hanntei si kakudo kimeru
 
@@ -88,7 +69,7 @@ public class Shougi_data : MonoBehaviour {
 		Debug.Log ("player"+playerLast["user_id"]);
 		if(playerLast["user_id"].ToString() == koma["owner"].ToString())
 		{	
-			Debug.Log ("weeeeeeeeeeeeeeeeeeeeeeeee");
+			//Debug.Log ("weeeeeeeeeeeeeeeeeeeeeeeee");
 			return 180f;
 		}
 		return 0f;
