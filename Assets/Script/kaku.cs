@@ -2,20 +2,22 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class fu : Koma {
+public class kaku : Koma {
 
-
+	
 	
 	public override Vector2 movePoint(long x,long y)
 	{
 		if(y != 9)
 		{
-			return new Vector2 (x,y-1);
+			//(y - _y)=(x-_x)
+			Debug.Log();
+			return new Vector2 (x - 1,y-1);
 		}
 		return new Vector2 (x, y);
-
+		
 	}
-
+	
 	/*
 	public void OnClick ()
 	{
@@ -31,12 +33,12 @@ public class fu : Koma {
 	}
 	*/
 	void Start () {
-
+		
 		Posx = 2;
 		Posy = 2;
 		canvas = GameObject.Find ("Canvas") as GameObject;
 		Board = GameObject.Find ("Board") as GameObject;
-
+		
 		Button button = this.GetComponent <Button> ();
 		button.onClick.AddListener (() => {
 			Debug.Log ("Clicked.");
@@ -46,15 +48,15 @@ public class fu : Koma {
 			Prefab.transform.SetParent (canvas.transform);
 			//kokode positon make
 			Prefab.GetComponent<RectTransform>().position = canvas.transform.position;
-				
-		/*
+			
+			/*
 			if (owner != (string)UserManager.Instance.UserData ["user_id"]) {
 				return;
 			}
 		*/
 			if (isSprActive ()) {
 				SprCretate (movePoint (Posx, Posy),Prefab);
-	     	} 
+			} 
 			else {
 				SprDelete();
 			}
