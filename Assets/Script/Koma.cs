@@ -14,15 +14,15 @@ public class Koma: MonoBehaviour  {
 	public GameObject komaPrefab{ get; private set;}
 	private bool Click = false;
 
-
-
+	
 	public virtual void movePoint(long x,long y)
 	{
 			
 	}
 
 	public void SetKoma(data data)
-	{//(long)koma["posx"],(long)koma["posy"],koma["owner"].ToString(),num,(bool)koma["promote"]
+	{
+		//(long)koma["posx"],(long)koma["posy"],koma["owner"].ToString(),num,(bool)koma["promote"]
 		Debug.Log ("koma"+data.koma["owner"]);
 		this.Posx = (long)data.koma["posx"];
 		this.Posy = (long)data.koma["posy"];

@@ -52,10 +52,11 @@ public class MatchingSystem : MonoBehaviour {
 				});
 				isConectting = false;
 				Communication.Instance.RequestGet ();
-			}else
+
+			}else if(!(_situation.roomSituation(userdata.UserData)))
 			{	
 				plyerstate.text = "YOU:Waiting";
-				//Communication.Instance.RequestGet ();
+				Communication.Instance.RequestGet ();
 			}
 			timer = INTERVAL;
 		}

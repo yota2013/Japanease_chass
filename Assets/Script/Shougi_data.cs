@@ -11,6 +11,7 @@ public struct data
 }
 public class Shougi_data : MonoBehaviour {
 
+	private bool init = true;
 	private UserManager Userdata;
 	public Dictionary<string,object> Pieceall{ get; private set;}//<ID(key),nakami> Peiece data
 	private GameObject Board;
@@ -23,8 +24,29 @@ public class Shougi_data : MonoBehaviour {
 
 	public void Piece_Get()
 	{
-		Piece_take ();
-
+		if(init)
+		{
+			Piece_take ();
+			init = false;
+		}
+		else 
+		{
+			komatransform();
+		}
+	}
+	private void komatransform()
+	{
+		URL url= UserManager.Instance.GetUserUrl ();
+		Communication.Instance.setUrl (url.piece());
+		Communication.Instance.OnDone((Dictionary<string,object> data) => {
+			Debug.Log (data);
+			foreach (KeyValuePair <string, object>kvp in data)
+			{
+				Dictionary<string,object> koma = kvp.Value as Dictionary<string,object>;
+				//KomaTra(koma,kvp.Key);
+			}
+		});
+		Communication.Instance.RequestGet ();
 	}
 
 	private void Piece_take()
@@ -41,15 +63,11 @@ public class Shougi_data : MonoBehaviour {
 			}
 		});
 		Communication.Instance.RequestGet ();
+
 	}
 
 	public void KomaCreate(Dictionary<string,object> koma,string num)
 	{
-		if (isPlyer (UserManager.Instance.GetplyerID ())) 
-		{
-
-
-		}
 		GameObject spremtyPrefab = Resources.Load ("Prefab/koma") as GameObject;
 		GameObject canvas = GameObject.Find ("Canvas") as GameObject;
 
