@@ -2,41 +2,41 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
+public struct data
+{
+	public	Dictionary<string,object> koma;
+	public string num;
+}
 public class Shougi_data : MonoBehaviour {
+
 	private UserManager Userdata;
 	public Dictionary<string,object> Pieceall{ get; private set;}//<ID(key),nakami> Peiece data
 	private GameObject Board;
 	private string FOrL;
 	// Use this for initialization
 	void Start () {
-		Userdata = GameObject.Find ("UserManager").GetComponent<UserManager> ();
+		//Userdata = GameObject.Find ("UserManager").GetComponent<UserManager> ();
 		Board = GameObject.Find ("Board");
 	}
-	
+
 	public void Piece_Get()
 	{
 		Piece_take ();
 
 	}
+
 	private void Piece_take()
 	{
 			//GET (plyerId + "/plays/"+plyerId+"/pieces");
-		URL url= Userdata.GetUserUrl ();
-		//StartCoroutine (Get (url.piece() ));
-	/*Communication.Instance.setUrl(userUrl().room_state());
-		Communication.Instance.OnDone((Dictionary<string,object> data) => {
-			roomstate = (string)data["state"];
-			Debug.Log (userdata.GetplyerID());
-		});
-		*/
+		URL url= UserManager.Instance.GetUserUrl ();
 		Communication.Instance.setUrl (url.piece());
 		Communication.Instance.OnDone((Dictionary<string,object> data) => {
 			Debug.Log (data);
 			foreach (KeyValuePair <string, object>kvp in data)
 			{
 				Dictionary<string,object> koma = kvp.Value as Dictionary<string,object>;
-
 				KomaCreate(koma,kvp.Key);
 			}
 		});
@@ -45,7 +45,7 @@ public class Shougi_data : MonoBehaviour {
 
 	public void KomaCreate(Dictionary<string,object> koma,string num)
 	{
-		if (isPlyer (Userdata.GetplyerID ())) 
+		if (isPlyer (UserManager.Instance.GetplyerID ())) 
 		{
 
 
@@ -54,11 +54,20 @@ public class Shougi_data : MonoBehaviour {
 		GameObject canvas = GameObject.Find ("Canvas") as GameObject;
 
 		GameObject komaPrefab = Instantiate(spremtyPrefab,new Vector2(0f,0f),
-		                                    Quaternion.Euler(new Vector3( 0,0,EnemyOrAlly (koma,Userdata.GetplyerID ())))) as GameObject;
+		                                    Quaternion.Euler(new Vector3( 0,0,EnemyOrAlly (koma,UserManager.Instance.GetplyerID ())))) as GameObject;
+
 		komaPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Koma/"+(string)koma["name"]);
 		komaPrefab.transform.SetParent (canvas.transform);
 		komaPrefab.GetComponent<RectTransform>().anchoredPosition = new ScreentoboradChange().Screentoboard((long)koma["posx"],(long)koma["posy"],Board);
-		komaPrefab.GetComponent<Koma> ().SetKoma ((long)koma["posx"],(long)koma["posy"],koma["owner"].ToString(),num,(bool)koma["promote"]);
+		Type ClassName = Type.GetType((string)koma["name"]);
+		var component = komaPrefab.AddComponent(ClassName);
+		Debug.Log ("Shougidata:"+koma["owner"].ToString());
+		//koma setting
+		data komaData = new data (); 
+		komaData.koma = koma;
+		komaData.num = num;
+		komaPrefab.SendMessage ("SetKoma",komaData);
+
 	}
 	//kokodeenemy hanntei si kakudo kimeru
 
@@ -82,7 +91,7 @@ public class Shougi_data : MonoBehaviour {
 		{
 			Dictionary<string,object> PlayerId = kvp.Value as Dictionary<string,object>;
 			FOrL = kvp.Key;
-			if (PlayerId["user_id"].ToString() == Userdata.UserData["user_id"].ToString() ) {
+			if (PlayerId["user_id"].ToString() == UserManager.Instance.UserData["user_id"].ToString() ) {
 				return true;
 			} 
 		}

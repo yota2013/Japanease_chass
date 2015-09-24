@@ -12,6 +12,7 @@ public class MatchingSystem : MonoBehaviour {
 	string roomstate;
 	private const float INTERVAL = 3.0f;
 	private float timer = INTERVAL;
+	private bool isConectting = true;
 	//Communication comm;
 	 // Json_analays json= new Json_analays();
 	// Use this for initialization
@@ -29,7 +30,7 @@ public class MatchingSystem : MonoBehaviour {
 		Communication.Instance.setUrl(userUrl().room_state());
 		Communication.Instance.OnDone((Dictionary<string,object> data) => {
 			roomstate = (string)data["state"];
-			Debug.Log (userdata.GetplyerID());
+		//	Debug.Log (userdata.GetplyerID());
 		});
 	}
 	// Update is called once per frame
@@ -39,7 +40,7 @@ public class MatchingSystem : MonoBehaviour {
 		if (timer <= 0)
 		{
 			// 任意の処理
-			if(_situation.roomSituation(userdata.UserData)== true)
+			if(_situation.roomSituation(userdata.UserData)== true&&isConectting)
 			{
 				Debug.Log("Battle START");
 				plyerstate.text = "YOU:START";
@@ -49,11 +50,12 @@ public class MatchingSystem : MonoBehaviour {
 					Debug.Log (userdata.GetplyerID());
 					shougiData.Piece_Get();
 				});
+				isConectting = false;
 				Communication.Instance.RequestGet ();
 			}else
 			{	
 				plyerstate.text = "YOU:Waiting";
-				Communication.Instance.RequestGet ();
+				//Communication.Instance.RequestGet ();
 			}
 			timer = INTERVAL;
 		}

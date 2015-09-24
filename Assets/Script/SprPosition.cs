@@ -27,11 +27,19 @@ public class SprPosition : MonoBehaviour {
 
 	public void OnSprClick()
 	{
-		Debug.Log (komaData.sprSyuObject);
-		Debug.Log (komaSelf.GetComponent <Koma> ().sprSyuObject);
+	
 		//koredesprSyu wo keseru
 		komaData.KomaSprMove(Pos);
 
+	}
+	private void OnTriggerStay2D(Collider2D other)
+	{	
+	//	Debug.Log (other.GetComponent<Koma>().owner);
+		if(other.tag =="koma"&&other.GetComponent<Koma>().owner == "a")
+		{
+			Debug.Log("uyoooooooooooo");
+			Destroy(gameObject);
+		}
 	}
 
 }
