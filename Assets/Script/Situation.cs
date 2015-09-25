@@ -24,9 +24,14 @@ public class Situation{
 		return false; 
 	}
 
-	public bool roomSituation(Dictionary<string,object> room_data)
+	public bool roomSituation(string room_data)
 	{
-		if((string)room_data ["state"] == "waiting")
+		Debug.Log (room_data);
+		if (room_data == null) 
+		{
+			return false;
+		}
+		if((string)room_data == "waiting")
 		{
 			return false;
 		}

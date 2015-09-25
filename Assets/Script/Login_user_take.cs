@@ -23,7 +23,7 @@ public class Login_user_take : MonoBehaviour {
 	}
 
 	public void UserLogin(string room,string username,string url){
-		url = "192.168.33.11:3000";
+	//	url = "192.168.33.11:3000";
 		//3.83
 		Debug.Log (url);
 		Debug.Log (username);

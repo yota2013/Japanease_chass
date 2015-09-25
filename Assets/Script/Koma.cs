@@ -53,10 +53,33 @@ public class Koma: MonoBehaviour  {
 		Prefab.GetComponent<RectTransform> ().localPosition = 
 			new ScreentoboradChange().Screentoboard((long)Point.x + 1,(-(long)Point.y)+1,Board);
 
-		Prefab.GetComponent<SprPosition> ().Pos =new Vector2(Posx+Point.x,Posy-Point.y) ;
+		if (UserPlayerID (UserManager.Instance.plyerID) == "first_player") {
+			Prefab.GetComponent<SprPosition> ().Pos = new Vector2 (Posx + Point.x, Posy - Point.y);
+		}
+		else if (UserPlayerID (UserManager.Instance.plyerID) == "last_player") 
+		{
+			Prefab.GetComponent<SprPosition> ().Pos = new Vector2 (Posx - Point.x, Posy + Point.y);
+		}
+
+
 		Prefab.GetComponent<SprPosition> ().komaSelf = gameObject;
 		Prefab.GetComponent<SprPosition> ().Komadata = this;
 	}
+
+	public string UserPlayerID(Dictionary<string,object> data)
+	{
+		foreach (KeyValuePair <string, object>kvp in data)
+		{
+			Dictionary<string,object> UserId= kvp.Value as Dictionary<string,object>;
+
+			if(UserId["user_id"].ToString() == owner)
+			{
+				return kvp.Key.ToString();
+			}
+		}
+		return "watcher";
+	}
+
 
 	public void SprDelete()
 	{

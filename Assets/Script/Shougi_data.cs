@@ -17,6 +17,7 @@ public class Shougi_data : MonoBehaviour {
 	private GameObject Board;
 	private string FOrL;
 	// Use this for initialization
+
 	void Start () {
 		//Userdata = GameObject.Find ("UserManager").GetComponent<UserManager> ();
 		Board = GameObject.Find ("Board");
@@ -96,7 +97,7 @@ public class Shougi_data : MonoBehaviour {
 		Debug.Log ("player"+playerLast["user_id"]);
 		if(playerLast["user_id"].ToString() == koma["owner"].ToString())
 		{	
-			//Debug.Log ("weeeeeeeeeeeeeeeeeeeeeeeee");
+
 			return 180f;
 		}
 		return 0f;

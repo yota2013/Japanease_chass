@@ -10,17 +10,11 @@ public class MatchingSystem : MonoBehaviour {
 	public Text plyerstate;
 	Situation _situation = new Situation ();
 	string roomstate;
-	private const float INTERVAL = 3.0f;
+	private const float INTERVAL = 1.0f;
 	private float timer = INTERVAL;
 	private bool isConectting = true;
-	//Communication comm;
-	 // Json_analays json= new Json_analays();
-	// Use this for initialization
-	void Awake () {
-		//StartCoroutine (Login_User_Take(user_data.room,user_data.username,user_data.url)); 
-		//AddComponent<test>();
 
-	}
+
 
 	
 	void Start ()
@@ -39,11 +33,12 @@ public class MatchingSystem : MonoBehaviour {
 		timer -= Time.deltaTime;
 		if (timer <= 0)
 		{
+
 			// 任意の処理
-			if(_situation.roomSituation(userdata.UserData)== true&&isConectting)
+			if(_situation.roomSituation(roomstate)== true&&isConectting ==true)
 			{
 				Debug.Log("Battle START");
-				plyerstate.text = "YOU:START";
+				plyerstate.text = "ROOM:START";
 				Communication.Instance.setUrl(userUrl().users());
 				Communication.Instance.OnDone((Dictionary<string,object> data) => {
 					userdata.SetPlyerID(data);
@@ -53,9 +48,10 @@ public class MatchingSystem : MonoBehaviour {
 				isConectting = false;
 				Communication.Instance.RequestGet ();
 
-			}else if(!(_situation.roomSituation(userdata.UserData)))
+			}else if(!(_situation.roomSituation(roomstate)))
 			{	
-				plyerstate.text = "YOU:Waiting";
+
+				plyerstate.text = "ROOM:Waiting";
 				Communication.Instance.RequestGet ();
 			}
 			timer = INTERVAL;

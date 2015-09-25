@@ -35,9 +35,8 @@ public class SprPosition : MonoBehaviour {
 	private void OnTriggerStay2D(Collider2D other)
 	{	
 	//	Debug.Log (other.GetComponent<Koma>().owner);
-		if(other.tag =="koma"&&other.GetComponent<Koma>().owner == "a")
+		if(other.tag =="koma"&&other.GetComponent<Koma>().owner == UserManager.Instance.UserData["user_id"].ToString())
 		{
-			Debug.Log("uyoooooooooooo");
 			Destroy(gameObject);
 		}
 	}

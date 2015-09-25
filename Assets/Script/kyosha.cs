@@ -24,7 +24,7 @@ public class kyosha : Koma {
 		button.onClick.AddListener (() => {
 			Debug.Log ("Clicked.");
 
-			if (owner != (string)UserManager.Instance.UserData ["user_id"]) {
+			if (owner != UserManager.Instance.UserData ["user_id"].ToString()) {
 				return;
 			}
 		
