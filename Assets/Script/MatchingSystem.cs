@@ -8,6 +8,7 @@ public class MatchingSystem : MonoBehaviour {
 	private  UserManager userdata;
 	private Shougi_data shougiData;
 	public Text plyerstate;
+	public Text player;
 	Situation _situation = new Situation ();
 	string roomstate;
 	private const float INTERVAL = 1.0f;
@@ -26,6 +27,7 @@ public class MatchingSystem : MonoBehaviour {
 			roomstate = (string)data["state"];
 		//	Debug.Log (userdata.GetplyerID());
 		});
+		player.text = "YOU:"+ UserManager.Instance.UserData["role"].ToString();
 	}
 	// Update is called once per frame
 	void Update () {

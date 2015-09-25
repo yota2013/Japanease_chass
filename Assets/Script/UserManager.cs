@@ -17,9 +17,7 @@ public class UserManager : SingletonMonoBehaviour<UserManager>{
 		userurl = new URL();
 	}
 
-	// Update is called once per frame
-	void Update () {
-	}
+
 	public Dictionary<string,object> GetUserData()
 	{
 		return this.UserData;
