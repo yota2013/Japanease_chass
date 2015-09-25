@@ -1,65 +1,119 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class Shougi_data : Json_analays {
-	private UserManager User_Login_data;
-	public Dictionary<string,object> Piece{ get; private set;}//<ID(key),nakami> Peiece data
-	private List<string> koma;
-	public GameObject prefab;
-	private int[,] board;
+using UnityEngine.UI;
+using System;
+
+public struct data
+{
+	public	Dictionary<string,object> koma;
+	public string num;
+}
+public class Shougi_data : MonoBehaviour {
+
+	private bool init = true;
+	private UserManager Userdata;
+	public Dictionary<string,object> Pieceall{ get; private set;}//<ID(key),nakami> Peiece data
+	private GameObject Board;
+	private string FOrL;
 	// Use this for initialization
+
 	void Start () {
-	//	User_Login_data = GameObject.Find("UserManager").GetComponent<UserManager>();
-		//Koma = new List<string> ();
-		SetKoma ();
-		board = new int[9,9];
-		for (int i = 0; i < board.GetLength(0); i++)
+		//Userdata = GameObject.Find ("UserManager").GetComponent<UserManager> ();
+		Board = GameObject.Find ("Board");
+	}
+
+	public void Piece_Get()
+	{
+		if(init)
 		{
-
-			for (int j = 0; j < board.GetLength(1); j++)
+			Piece_take ();
+			init = false;
+		}
+		else 
+		{
+			komatransform();
+		}
+	}
+	private void komatransform()
+	{
+		URL url= UserManager.Instance.GetUserUrl ();
+		Communication.Instance.setUrl (url.piece());
+		Communication.Instance.OnDone((Dictionary<string,object> data) => {
+			Debug.Log (data);
+			foreach (KeyValuePair <string, object>kvp in data)
 			{
-				board[i,j] = 0;
-				Debug.Log(board[i,j]);
-			}            
+				Dictionary<string,object> koma = kvp.Value as Dictionary<string,object>;
+				//KomaTra(koma,kvp.Key);
+			}
+		});
+		Communication.Instance.RequestGet ();
+	}
+
+	private void Piece_take()
+	{
+			//GET (plyerId + "/plays/"+plyerId+"/pieces");
+		URL url= UserManager.Instance.GetUserUrl ();
+		Communication.Instance.setUrl (url.piece());
+		Communication.Instance.OnDone((Dictionary<string,object> data) => {
+			Debug.Log (data);
+			foreach (KeyValuePair <string, object>kvp in data)
+			{
+				Dictionary<string,object> koma = kvp.Value as Dictionary<string,object>;
+				KomaCreate(koma,kvp.Key);
+			}
+		});
+		Communication.Instance.RequestGet ();
+
+	}
+
+	public void KomaCreate(Dictionary<string,object> koma,string num)
+	{
+		GameObject spremtyPrefab = Resources.Load ("Prefab/koma") as GameObject;
+		GameObject canvas = GameObject.Find ("Canvas") as GameObject;
+
+		GameObject komaPrefab = Instantiate(spremtyPrefab,new Vector2(0f,0f),
+		                                    Quaternion.Euler(new Vector3( 0,0,EnemyOrAlly (koma,UserManager.Instance.GetplyerID ())))) as GameObject;
+
+		komaPrefab.GetComponent<Image>().sprite = Resources.Load<Sprite>("Koma/"+(string)koma["name"]);
+		komaPrefab.transform.SetParent (canvas.transform);
+		komaPrefab.GetComponent<RectTransform>().anchoredPosition = new ScreentoboradChange().Screentoboard((long)koma["posx"],(long)koma["posy"],Board);
+		Type ClassName = Type.GetType((string)koma["name"]);
+		var component = komaPrefab.AddComponent(ClassName);
+		Debug.Log ("Shougidata:"+koma["owner"].ToString());
+		//koma setting
+		data komaData = new data (); 
+		komaData.koma = koma;
+		komaData.num = num;
+		komaPrefab.SendMessage ("SetKoma",komaData);
+
+	}
+	//kokodeenemy hanntei si kakudo kimeru
+
+	private float EnemyOrAlly(Dictionary<string,object> koma,Dictionary<string,object> player)
+	{
+		Dictionary<string,object> playerLast = player["last_player"] as Dictionary<string,object>;
+		Debug.Log ("koma"+koma["owner"]);
+		Debug.Log ("player"+playerLast["user_id"]);
+		if(playerLast["user_id"].ToString() == koma["owner"].ToString())
+		{	
+
+			return 180f;
 		}
+		return 0f;
 	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
+	//IsForwardPiece
+	//player ka douka
+	private bool isPlyer(Dictionary<string,object> player) {
 
-	}
-	void SetKoma()
-	{
-		//Koma.Add ("Assets/Resource/60x64/sgl01");
-		//Debug.Log (Koma[1]);
-		//GameObject prefab = Resources.Load ("/60x64/sgl01.png") as GameObject;
-		Instantiate(prefab, new Vector3(1f,1f,1f),Quaternion.identity);
-	}
-	void PieceGet()
-	{
-		StartCoroutine(Piece_take());
-
-	}
-	private IEnumerator Piece_take()
-	{
-		string url = "http://192.168.33.11:3000/plays/対戦ID/pieces";
-		WWW www = new WWW(url);
-		yield return www;
-		if (www.error == null) {
-			Debug.Log (www.text);
-			Piece = Json_Dictionary(www.text); 
-		} else {
-			Debug.Log ("data nothing");
+		foreach (KeyValuePair <string, object>kvp in player)
+		{
+			Dictionary<string,object> PlayerId = kvp.Value as Dictionary<string,object>;
+			FOrL = kvp.Key;
+			if (PlayerId["user_id"].ToString() == UserManager.Instance.UserData["user_id"].ToString() ) {
+				return true;
+			} 
 		}
+		return false;
 	}
-	void init_postion(){
-		//foreach ( int i in Piece.Keys[][][])
-		//
-		//switch(変数)
-	//	{case :
-		// break;
-	//	}
-	}
-
 }

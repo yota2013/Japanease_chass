@@ -3,50 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using MiniJSON;
 
-public class UserManager : Json_analays {
-	public Dictionary<string,object> User_data{get; private set;}
-	/*
-	public string user_id{ get; private set;}
-	public string play_id{ get; private set;}
-	public string state{ get; private set;}
-	public string role{ get; private set;} 
-	*/
+public class UserManager : SingletonMonoBehaviour<UserManager>{
+	public Dictionary<string,object> UserData{get; private set;}
+	public Dictionary<string,object> plyerID;
+	public URL userurl;
+
 	// Use this for initialization
 	void Awake(){
 		DontDestroyOnLoad (this.gameObject);// DontDestroy gameobject
 	}
+
 	void Start () {
+		userurl = new URL();
 	}
 
 	// Update is called once per frame
 	void Update () {
 	}
-
-	public void User_Login(string room,string username,string url){
-		url = "http://192.168.33.11:3000/users/login";
-		Debug.Log (url);
-		Debug.Log (username);
-		Debug.Log (room);
-		//Login_User_Take ();
-		StartCoroutine(Login_User_Take(room,username,url));
-	}
-
-	private IEnumerator Login_User_Take(string room,string username,string url)
+	public Dictionary<string,object> GetUserData()
 	{
-		WWWForm Form = new WWWForm ();
-		Form.AddField ("name",username);
-		Form.AddField( "room_no",room);
-		WWW www = new WWW(url, Form);
-		yield return www;
-		if (www.error == null) {
-			Debug.Log (www.text);
-			User_data = Json_Dictionary (www.text);
-			Application.LoadLevel("gamemode");
-		} else {
-			Debug.Log(" deta nothing");
-			//debug yatu
-			Application.LoadLevel("gamemode");
-		}
+		return this.UserData;
 	}
 
+	public void SetUserData(Dictionary<string,object> data)
+	{
+		this.UserData = data;
+	}
+	public URL GetUserUrl()
+	{
+		return this.userurl;
+	}
+	
+	public void SetPlyerID(Dictionary<string,object> data)
+	{
+		this.plyerID = data;
+	}
+	public Dictionary<string,object> GetplyerID()
+	{
+		return this.plyerID;
+	}
+	
 }
